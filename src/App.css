@@ -1,0 +1,9 @@
+.counter-section, .container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container{
+  flex-direction: column;
+}
