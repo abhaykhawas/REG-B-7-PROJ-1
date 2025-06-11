@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div style={{height:'100vh', background:'black', color: 'white'}} className='container'>
-      <h1>Counter</h1>
+      <h1>Counter :|</h1>
       <div className="counter-section">
         <button onClick={() => setCounter(counter+1)}>+</button>
         <h3>{counter}</h3>
