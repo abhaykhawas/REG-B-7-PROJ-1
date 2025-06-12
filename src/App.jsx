@@ -1,38 +1,43 @@
-import { useState, useEffect } from 'react'
+import { useReducer, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [counter, setCounter] = useState(0)
-  const [date, setDate] = useState('')
-  // NOTE for useState : 
-  // 1. counter : a variable which at first has a value of 0.
-  // 2. setCounter : a function that can change counter [0, func]
 
-  useEffect(() => {
-    setCounter(Number(localStorage.getItem('count')))
-  }, [])
+  // Step 1
+  const initialState = {count:0, date: ''}
 
-  function handleInc() {
-    setDate(new Date().toString())
-    localStorage.setItem('count', counter+1)
-    setCounter(counter+1)
+  // Step 2
+  function reducer(state, action){
+    if (action == 'inc') {
+      return { count: state.count+1, date: new Date().toString() }
+    }
+    else if (action == 'dsc') {
+      return { count: state.count-1, date: new Date().toString() }
+    }
+    else if (action == 'rst') {
+      return { count: 0, date: new Date().toString() }
+    }
+    else {
+      return { count: state.count }
+    }
   }
 
-  function handleDec() {
-    setDate(new Date().toString())
-    localStorage.setItem('count', counter-1)
-    setCounter(counter-1)
-  }
+  // step 3
+  const [state, dispatch] = useReducer(reducer, initialState)
+  // dispatch function is same as reducer function
+  // state is same as initialState
 
   return (
     <div style={{height:'100vh', background:'black', color: 'white'}} className='container'>
       <h1>Counter :|</h1>
       <div className="counter-section">
-        <button onClick={handleInc}>+</button>
-        <h3>{counter}</h3>
-        <button onClick={handleDec}>-</button>
+        <button onClick={() => dispatch('inc')}>+</button>
+        <h3>{state.count}</h3>
+        <button onClick={() => dispatch('dsc')}>-</button>
+        <br />
+        <button onClick={() => dispatch('rst')}>RESET</button>
       </div>
-      <h3>{date}</h3>
+      <h3>{state.date}</h3>
     </div>
   )
 }
